@@ -23,13 +23,16 @@ export default {
   get user() {
     return userStore;
   },
-  async checkIfSignedIn() {
+  async checkSignedInPreviously() {
     const { data } = await supabase.auth.getSession();
     return data.session;
   },
   signIn() {
     return supabase.auth.signInWithOAuth({
-      provider: 'google'
+      provider: 'google',
+      options: {
+        skipBrowserRedirect: true
+      }
     });
   },
   signOut() {

@@ -8,16 +8,24 @@
   const BANNER_NAMES = ['Character', 'Light Cone', 'Stellar', 'Departure'];
   let warpsByBanner: { [key: string]: Warp[] } = {};
   let currentBannerWarps: Warp[] = [];
+  let clickedSignIn = false;
+  const user = db.user;
 
-  db.checkIfSignedIn().then((signedIn) => {
-    if (!signedIn) {
-      db.signIn();
+  $: console.log($user);
+
+  function loginOnClick() {
+    if (!$user) {
+      console.log('hi');
+      console.log(db.signIn());
     }
-  });
+    clickedSignIn = true;
+  }
 
-  db.warps.getAllWarps().then((warps) => {
-    warpsByBanner = getWarpsByBanner(warps);
-  });
+  $: if (clickedSignIn && $user) {
+    db.warps.getAllWarps().then((warps) => {
+      warpsByBanner = getWarpsByBanner(warps);
+    });
+  }
 
   $: if (warpsByBanner[$selectedBanner.toLowerCase().replace(/ /g, '_')]) {
     currentBannerWarps = warpsByBanner[$selectedBanner.toLowerCase().replace(/ /g, '_')];
@@ -26,71 +34,76 @@
   }
 </script>
 
-<h1>warpstar</h1>
+{#if !clickedSignIn || !$user}
+  <p>not signed in</p>
+  <button on:click={loginOnClick} class="sign-in">sign in</button>
+{:else}
+  <h1>warpstar</h1>
 
-<p>(Better UI and more coming soon)</p>
+  <p>(Better UI and more coming soon)</p>
 
-<p>Run the following in a non-admin PowerShell while the in-game warp history screen is open.</p>
-<code>iwr -useb https://warpstar.hotsno.me/warpurl | iex</code>
+  <p>Run the following in a non-admin PowerShell while the in-game warp history screen is open.</p>
+  <code>iwr -useb https://warpstar.hotsno.me/warpurl | iex</code>
 
-<ul>
-  <li><p>Paste URL here:</p></li>
-  <li>
-    <input
-      type="text"
-      autocomplete="off"
-      on:keydown={async (e) => {
-        if (e.key === 'Enter') {
-          const input = e.currentTarget;
-          const url = input.value;
-          input.value = '';
+  <ul>
+    <li><p>Paste URL here:</p></li>
+    <li>
+      <input
+        type="text"
+        autocomplete="off"
+        on:keydown={async (e) => {
+          if (e.key === 'Enter') {
+            const input = e.currentTarget;
+            const url = input.value;
+            input.value = '';
 
-          const response = await fetch('/warps', {
-            method: 'POST',
-            body: JSON.stringify({ url }),
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
+            const response = await fetch('/warps', {
+              method: 'POST',
+              body: JSON.stringify({ url }),
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
 
-          let warps = await response.json();
-          warpsByBanner = getWarpsByBanner(warps);
-          db.warps.add(warps);
-        }
-      }}
-    />
-  </li>
-</ul>
+            let warps = await response.json();
+            warpsByBanner = getWarpsByBanner(warps);
+            db.warps.add(warps);
+          }
+        }}
+      />
+    </li>
+  </ul>
 
-<ul>
-  {#each BANNER_NAMES as bannerName}
-    <BannerButton {bannerName} />
-  {/each}
-</ul>
+  <ul>
+    {#each BANNER_NAMES as bannerName}
+      <BannerButton {bannerName} />
+    {/each}
+  </ul>
 
-{#if $selectedBanner}
-  <table>
-    <thead>
-      <tr>
-        <th>roll</th>
-        <th>item</th>
-        <th>4 star pity</th>
-        <th>5 star pity</th>
-        <th>time</th>
-      </tr>
-    </thead>
-    <tbody>
-      {#each currentBannerWarps as warp}
+  {#if $selectedBanner}
+    <table>
+      <thead>
         <tr>
-          <td>{warp.pull_number}</td>
-          <td>{warp.item_name}</td>
-          <td>{warp.four_star_pity}</td>
-          <td>{warp.five_star_pity}</td>
-          <td>{warp.acquisition_time}</td>
+          <th>roll</th>
+          <th>item</th>
+          <th>4 star pity</th>
+          <th>5 star pity</th>
+          <th>time</th>
         </tr>
-      {/each}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {#each currentBannerWarps as warp}
+          <tr>
+            <td>{warp.pull_number}</td>
+            <td>{warp.item_name}</td>
+            <td>{warp.four_star_pity}</td>
+            <td>{warp.five_star_pity}</td>
+            <td>{warp.acquisition_time}</td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  {/if}
 {/if}
 
 <style>
@@ -100,5 +113,11 @@
   ul {
     list-style-type: none;
     padding-left: 0;
+  }
+
+  .sign-in {
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
 </style>
