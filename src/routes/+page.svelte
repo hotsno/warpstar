@@ -5,12 +5,12 @@
   import { getWarpsByBanner } from './utils';
   import type { Warp } from '$lib/server/fetchWarps';
 
-  const BANNERS = ['Character', 'Light Cone', 'Stellar', 'Departure'];
+  const BANNER_NAMES = ['Character', 'Light Cone', 'Stellar', 'Departure'];
   let warpsByBanner: { [key: string]: Warp[] } = {};
   let currentBannerWarps: Warp[] = [];
 
-  db.checkIfSignedIn().then((value) => {
-    if (!value) {
+  db.checkIfSignedIn().then((signedIn) => {
+    if (!signedIn) {
       db.signIn();
     }
   });
@@ -21,13 +21,17 @@
 
   $: if (warpsByBanner[$selectedBanner.toLowerCase().replace(/ /g, '_')]) {
     currentBannerWarps = warpsByBanner[$selectedBanner.toLowerCase().replace(/ /g, '_')];
+  } else {
+    currentBannerWarps = [];
   }
 </script>
 
 <h1>warpstar</h1>
 
-<p>Run the following in non-admin Powershell while the in-game warp history screen is open.</p>
-<code>iwr -useb https://warpstar.vercel.app/warpurl | iex</code>
+<p>(Better UI and more coming soon)</p>
+
+<p>Run the following in a non-admin PowerShell while the in-game warp history screen is open.</p>
+<code>iwr -useb https://warpstar.hotsno.me/warpurl | iex</code>
 
 <ul>
   <li><p>Paste URL here:</p></li>
@@ -59,7 +63,7 @@
 </ul>
 
 <ul>
-  {#each BANNERS as bannerName}
+  {#each BANNER_NAMES as bannerName}
     <BannerButton {bannerName} />
   {/each}
 </ul>
@@ -70,8 +74,8 @@
       <tr>
         <th>roll</th>
         <th>item</th>
-        <th>4* pity</th>
-        <th>5* pity</th>
+        <th>4 star pity</th>
+        <th>5 star pity</th>
         <th>time</th>
       </tr>
     </thead>
