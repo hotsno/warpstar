@@ -1,29 +1,32 @@
 <script lang="ts">
   import BannerButton from '../components/atoms/BannerButton.svelte';
+  import Logo from '../components/atoms/Logo.svelte';
   import db from './db';
   import { selectedBanner } from '../stores';
   import { getWarpsByBanner } from './utils';
   import type { Warp } from '$lib/server/fetchWarps';
+  import { onMount } from 'svelte';
+  import Home from '../components/organisms/Home.svelte';
 
   const BANNER_NAMES = ['Character', 'Light Cone', 'Stellar', 'Departure'];
+
+  const user = db.user;
+  let clickedSignIn = false;
   let warpsByBanner: { [key: string]: Warp[] } = {};
   let currentBannerWarps: Warp[] = [];
-  let clickedSignIn = false;
-  const user = db.user;
 
-  if (window.location.hash.indexOf('#auth_token=') !== -1) {
-    // close if redirected from oauth page
-    window.close();
-  }
-
-  $: console.log($user);
+  onMount(() => {
+    if (window.location.hash.includes('signed-in')) {
+      clickedSignIn = true;
+    }
+  });
 
   function loginOnClick() {
     if (!$user) {
-      console.log('hi');
-      console.log(db.signIn());
+      db.signIn();
+    } else {
+      clickedSignIn = true;
     }
-    clickedSignIn = true;
   }
 
   $: if (clickedSignIn && $user) {
@@ -32,16 +35,18 @@
     });
   }
 
-  $: if (warpsByBanner[$selectedBanner.toLowerCase().replace(/ /g, '_')]) {
-    currentBannerWarps = warpsByBanner[$selectedBanner.toLowerCase().replace(/ /g, '_')];
+  // TODO: fix this ugliness
+  let selectedBannerAlt = '';
+  $: selectedBannerAlt = $selectedBanner.toLowerCase().replace(/ /g, '_');
+  $: if (warpsByBanner[selectedBannerAlt]) {
+    currentBannerWarps = warpsByBanner[selectedBannerAlt];
   } else {
     currentBannerWarps = [];
   }
 </script>
 
 {#if !clickedSignIn || !$user}
-  <p>not signed in</p>
-  <button on:click={loginOnClick} class="sign-in">sign in</button>
+  <Home on:click={loginOnClick} />
 {:else}
   <h1>warpstar</h1>
 
@@ -118,11 +123,5 @@
   ul {
     list-style-type: none;
     padding-left: 0;
-  }
-
-  .sign-in {
-    position: absolute;
-    top: 10px;
-    right: 10px;
   }
 </style>

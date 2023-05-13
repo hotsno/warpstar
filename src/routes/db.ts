@@ -6,6 +6,7 @@ import type { Warp } from '$lib/server/fetchWarps';
 export const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_KEY);
 
 const userStore = writable();
+const clickedSignInStore = writable(false);
 
 supabase.auth.getSession().then(({ data }) => {
   userStore.set(data.session?.user);
@@ -14,6 +15,7 @@ supabase.auth.getSession().then(({ data }) => {
 supabase.auth.onAuthStateChange((event, session) => {
   if (event == 'SIGNED_IN' && session) {
     userStore.set(session.user);
+    clickedSignInStore.set(true);
   } else if (event == 'SIGNED_OUT') {
     userStore.set(null);
   }
@@ -23,6 +25,9 @@ export default {
   get user() {
     return userStore;
   },
+  get clickedSignIn() {
+    return clickedSignInStore;
+  },
   async checkSignedInPreviously() {
     const { data } = await supabase.auth.getSession();
     return data.session;
@@ -31,7 +36,7 @@ export default {
     return supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        skipBrowserRedirect: true
+        redirectTo: 'http://localhost:5173/#signed-in'
       }
     });
   },
