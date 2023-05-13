@@ -36,7 +36,7 @@ export default {
     return supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: 'http://localhost:5173/#signed-in'
+        redirectTo: 'https://warpstar.hotsno.me#signed-in'
       }
     });
   },

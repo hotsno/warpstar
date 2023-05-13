@@ -1,6 +1,5 @@
 <script lang="ts">
   import BannerButton from '../components/atoms/BannerButton.svelte';
-  import Logo from '../components/atoms/Logo.svelte';
   import db from './db';
   import { selectedBanner } from '../stores';
   import { getWarpsByBanner } from './utils';
