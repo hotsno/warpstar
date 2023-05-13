@@ -11,6 +11,11 @@
   let clickedSignIn = false;
   const user = db.user;
 
+  if (window.location.hash.indexOf('#auth_token=') !== -1) {
+    // close if redirected from oauth page
+    window.close();
+  }
+
   $: console.log($user);
 
   function loginOnClick() {
