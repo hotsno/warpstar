@@ -124,4 +124,7 @@
     list-style-type: none;
     padding-left: 0;
   }
+  h1 {
+    margin-top: 0;
+  }
 </style>
