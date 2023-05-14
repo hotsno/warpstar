@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { writable } from 'svelte/store';
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_KEY } from '$env/static/public';
-import type { Warp } from '$lib/server/fetchWarps';
+import type { DBWarp, Warp } from '$lib/server/fetchWarps';
 
 export const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_KEY);
 
@@ -36,7 +36,7 @@ export default {
     return supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: 'https://warpstar.hotsno.me#signed-in'
+        redirectTo: 'http://localhost:5173#signed-in'
       }
     });
   },
@@ -44,11 +44,13 @@ export default {
     return supabase.auth.signOut();
   },
   warps: {
-    async add(warps: Warp[]): Promise<Warp[]> {
+    async add(warps: DBWarp[]): Promise<DBWarp[]> {
+      console.log(warps);
       const { data } = await supabase.from('warps').insert(warps).select();
+      console.log(data);
       return data as Warp[];
     },
-    async getAllWarps(): Promise<Warp[]> {
+    async getAllWarps(): Promise<DBWarp[]> {
       const { data } = await supabase.from('warps').select('*');
       return data as Warp[];
     }

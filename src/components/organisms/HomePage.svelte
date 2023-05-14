@@ -14,6 +14,7 @@
     position: absolute;
     top: 20px;
     right: 20px;
+    user-select: none;
   }
 
   div {
@@ -23,4 +24,8 @@
     justify-content: center;
     align-items: center;
   }
+
+  /* tr:nth-child(even) {
+    background-color: #333;
+  } */
 </style>

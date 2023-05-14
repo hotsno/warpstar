@@ -1,6 +1,20 @@
-import type { Warp } from '$lib/server/fetchWarps';
+import type { DBWarp, Warp } from '$lib/server/fetchWarps';
 
-export function getWarpsByBanner(warps: Warp[]) {
+function dbWarpsToWarps(dbWarps: DBWarp[]) {
+  const warps: Warp[] = [];
+  for (const dbWarp of dbWarps) {
+    warps.push({
+      ...dbWarp,
+      pull_number: -1,
+      four_star_pity: -1,
+      five_star_pity: -1
+    });
+  }
+  return warps;
+}
+
+export function getWarpsByBanner(dbWarps: DBWarp[]) {
+  const warps = dbWarpsToWarps(dbWarps);
   warps.sort((a, b) => b.pull_id - a.pull_id); // most recent to oldest
 
   const warpsByBanner: { [key: string]: Warp[] } = {};
