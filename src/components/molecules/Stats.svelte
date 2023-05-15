@@ -6,9 +6,10 @@
   }
 </script>
 
-{#if $warpsByBanner}
+{#if Object.keys($warpsByBanner).length !== 0}
+  <!-- TODO: fix this ugliness ^ -->
   <div class="stats">
-    <!-- TODO: clean this shit up -->
+    <!-- TODO: stop using so many divs -->
     <div>
       <div class="overall-stats">
         <h2>Overall stats</h2>
