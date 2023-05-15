@@ -1,20 +1,23 @@
 <script>
   import Logo from '../atoms/Logo.svelte';
+  import NavbarButton from '../atoms/NavbarButton.svelte';
 </script>
 
 <div>
   <Logo />
-  <a on:click class="sign-in">Sign in</a>
+  <div class="sign-in">
+    <NavbarButton on:click>Sign in</NavbarButton>
+  </div>
 </div>
 
 <style>
   .sign-in {
     cursor: pointer;
-    font-size: 20px;
     position: absolute;
     top: 20px;
     right: 20px;
     user-select: none;
+    display: block;
   }
 
   div {

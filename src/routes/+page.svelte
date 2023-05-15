@@ -3,6 +3,8 @@
   import { onMount } from 'svelte';
   import HomePage from '../components/organisms/HomePage.svelte';
   import MainPage from '../components/organisms/MainPage.svelte';
+  import { warpsByBanner } from '../stores';
+  import { getWarpsByBanner } from './utils';
 
   const user = db.user;
   let clickedSignIn = false;
@@ -13,9 +15,15 @@
     }
   });
 
-  function signInHandler() {
+  if ($user) {
+    db.warps.getAllWarps().then((warps) => {
+      warpsByBanner.set(getWarpsByBanner(warps));
+    });
+  }
+
+  async function signInHandler() {
     if (!$user) {
-      db.signIn();
+      await db.signIn();
     } else {
       clickedSignIn = true;
     }
