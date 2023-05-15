@@ -46,6 +46,13 @@
             >
           </tr>
         {/each}
+        {#if currentBannerWarps.length === 0}
+          <tr>
+            <td><b>N/A</b></td>
+            <td><b>N/A</b></td>
+            <td><b>N/A</b></td>
+          </tr>
+        {/if}
       </tbody>
     </table>
   {/if}

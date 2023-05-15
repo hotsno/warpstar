@@ -1,5 +1,4 @@
 import type { DBWarp, Warp } from '$lib/server/fetchWarps';
-import { get } from 'svelte/store';
 
 function dbWarpsToWarps(dbWarps: DBWarp[]) {
   const warps: Warp[] = [];
@@ -51,6 +50,9 @@ export function getWarpsByBanner(dbWarps: DBWarp[]) {
 
 export function getOverallAvgPity(stars: number, warpsByBanner: { [key: string]: Warp[] }): string {
   const pities = [];
+  if (!warpsByBanner || Object.keys(warpsByBanner).length !== 0) {
+    return 'N/A';
+  }
   for (const banner in warpsByBanner) {
     for (const [i, warp] of warpsByBanner[banner].entries()) {
       if (stars == 5 && warp.rank_type === 5) {
@@ -77,6 +79,9 @@ export function getBannerAvgPity(
 ) {
   const pities = [];
   const bannerAlt = banner.toLowerCase().replace(/ /g, '_');
+  if (!warpsByBanner || !warpsByBanner[bannerAlt] || warpsByBanner[bannerAlt].length === 0) {
+    return 'N/A';
+  }
   for (const [i, warp] of warpsByBanner[bannerAlt].entries()) {
     if (stars == 5 && warp.rank_type === 5) {
       if (bannerAlt === 'departure' && i === 0) {
@@ -100,14 +105,14 @@ export function getCurPity(
   banner: string
 ): string {
   const bannerAlt = banner.toLowerCase().replace(/ /g, '_');
-  if (warpsByBanner[bannerAlt].length === 0) {
+  if (!warpsByBanner || !warpsByBanner[bannerAlt] || warpsByBanner[bannerAlt].length === 0) {
     return 'N/A';
   }
   if (warpsByBanner[bannerAlt][0].rank_type === stars) {
     return '0';
   }
   if (stars == 4) {
-    return warpsByBanner[bannerAlt][0].four_star_pity.toString();
+    return warpsByBanner[bannerAlt][0].four_star_pity.toString() + '/10';
   }
-  return warpsByBanner[bannerAlt][0].five_star_pity.toString();
+  return warpsByBanner[bannerAlt][0].five_star_pity.toString() + '/90';
 }

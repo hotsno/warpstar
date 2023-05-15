@@ -1,12 +1,24 @@
 <script>
   import Logo from '../atoms/Logo.svelte';
   import NavbarButton from '../atoms/NavbarButton.svelte';
+  import { onMount } from 'svelte';
+
+  const QUOTES = ['March 7th cute and funny', "I don't even play this game", 'Ran out of quotes'];
+  const randomQuote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+
+  // let randomQuote = '';
+  // onMount(() => {
+  //   console.log('mounted');
+  // });
 </script>
 
 <div class="wrapper">
-  <Logo />
   <div class="sign-in">
     <NavbarButton on:click>Sign in</NavbarButton>
+  </div>
+  <Logo />
+  <div class="quote">
+    <p>{randomQuote}</p>
   </div>
 </div>
 
@@ -26,5 +38,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .quote {
+    font-style: italic;
+    color: #444;
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    cursor: default;
+    display: block;
   }
 </style>

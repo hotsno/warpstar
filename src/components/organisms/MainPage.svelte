@@ -33,8 +33,6 @@
   <NavbarButton on:click={signOutAndReload}>Sign out</NavbarButton>
 </div>
 
-<p><i>Note: site still under construction</i></p>
-
 <Modal bind:showModal />
 
 <div class="container">
@@ -62,11 +60,14 @@
   .container {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
+    width: auto;
+    margin-inline: auto;
   }
 
   @media (min-width: 1200px) {
     .container {
       grid-template-columns: 1fr 1fr;
+      width: max(60%, 1200px);
     }
   }
 

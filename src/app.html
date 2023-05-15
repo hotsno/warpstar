@@ -46,6 +46,19 @@
     html {
       height: 100%;
       margin: 0;
+
+      overflow-y: scroll; /* Show vertical scrollbar */
+    }
+
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #111;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #222;
+      border-radius: 5px;
     }
   </style>
 </html>
