@@ -9,9 +9,9 @@
     padding: 5px 10px;
     font-size: 1.2rem;
     text-align: center;
-    color: #ddd;
+    color: #aaa;
     border-radius: 5px;
-    background-color: #22222200;
+    background-color: rgba(255, 255, 255, 0.03);
     transition: all 0.3s ease;
     cursor: pointer;
   }

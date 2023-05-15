@@ -1,7 +1,5 @@
 <script lang="ts">
-  import db from '../../routes/db';
   import { selectedBanner } from '../../stores';
-  import { getWarpsByBanner } from '../../routes/utils';
   import type { Warp } from '$lib/server/fetchWarps';
   import { warpsByBanner } from '../../stores';
 
@@ -36,7 +34,7 @@
                 class:circle-five-star={warp.rank_type == 5}
                 class:circle-four-star={warp.rank_type == 4}
               />
-              <span class="pity-text">{warp.five_star_pity}</span></td
+              <span class="pity-text">{warp.four_star_pity}</span></td
             >
             <td>{warp.item_name}</td>
             <td
@@ -58,10 +56,17 @@
     /* display: inline-block; */
     border-collapse: separate;
     border-spacing: 0;
-    width: min(600px, 50vw);
+    width: 600px;
     background-color: #151515;
     border-radius: 20px;
     box-shadow: 0px 0px 10px 10px #0d0d0d88;
+    table-layout: auto;
+  }
+
+  @media (min-width: 1200px) {
+    table {
+      width: min(600px, 40vw);
+    }
   }
 
   th {

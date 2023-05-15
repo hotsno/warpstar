@@ -8,14 +8,16 @@
 
   const user = db.user;
   let clickedSignIn = false;
+  let originURL: string;
 
   onMount(() => {
     if (window.location.hash.includes('signed-in')) {
       clickedSignIn = true;
     }
+    originURL = window.location.origin;
   });
 
-  if ($user) {
+  $: if ($user) {
     db.warps.getAllWarps().then((warps) => {
       warpsByBanner.set(getWarpsByBanner(warps));
     });
@@ -23,7 +25,7 @@
 
   async function signInHandler() {
     if (!$user) {
-      await db.signIn();
+      await db.signIn(originURL);
     } else {
       clickedSignIn = true;
     }

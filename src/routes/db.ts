@@ -32,11 +32,11 @@ export default {
     const { data } = await supabase.auth.getSession();
     return data.session;
   },
-  signIn() {
+  signIn(originURL: string) {
     return supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: 'http://warpstar.hotsno.me#signed-in'
+        redirectTo: `${originURL}#signed-in`
       }
     });
   },

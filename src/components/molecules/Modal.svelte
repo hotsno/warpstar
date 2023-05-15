@@ -1,5 +1,8 @@
 <script lang="ts">
   export let showModal = false;
+  import { warpsByBanner } from '../../stores';
+  import db from '../../routes/db';
+  import { getWarpsByBanner } from '../../routes/utils';
 
   let dialog: HTMLDialogElement;
 
@@ -13,9 +16,39 @@
   on:click|self={() => dialog.close()}
 >
   <div on:click|stopPropagation>
-    <slot name="header" />
-    <slot />
-    <!-- svelte-ignore a11y-autofocus -->
+    <p>
+      Run the following in a non-admin PowerShell while the in-game warp history screen is open.
+      It'll copy a URL to your clipboard.
+    </p>
+    <code>iwr -useb https://warpstar.hotsno.me/getwarpurl | iex</code>
+    <ul>
+      <li>Paste URL here:</li>
+      <li>
+        <input
+          type="text"
+          autocomplete="off"
+          on:keydown={async (e) => {
+            if (e.key === 'Enter') {
+              const input = e.currentTarget;
+              const url = input.value;
+              input.value = '';
+
+              const response = await fetch('/warps', {
+                method: 'POST',
+                body: JSON.stringify({ url }),
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              });
+
+              let warps = await response.json();
+              warpsByBanner.set(getWarpsByBanner(warps));
+              db.warps.add(warps);
+            }
+          }}
+        />
+      </li>
+    </ul>
   </div>
 </dialog>
 
@@ -56,5 +89,20 @@
     to {
       opacity: 1;
     }
+  }
+
+  input {
+    background-color: #333;
+    border: 0;
+    color: #ccc;
+  }
+
+  li {
+    display: inline-block;
+  }
+
+  ul {
+    list-style-type: none;
+    padding-left: 0;
   }
 </style>

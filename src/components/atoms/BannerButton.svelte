@@ -20,20 +20,20 @@
 
   button {
     border: 0;
-    padding: 10px 20px;
+    padding: 7px 12px;
     font-size: 1rem;
     text-align: center;
     color: #ddd;
     border-radius: 5px;
-    background-color: #222;
+    background-color: #22222200;
     transition: all 0.3s ease;
     cursor: pointer;
   }
 
   button:hover,
   button.selected {
-    background-color: #ccc;
-    color: #111;
+    background-color: #222;
+    color: #eee;
   }
 
   button:active {

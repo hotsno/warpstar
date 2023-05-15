@@ -3,11 +3,17 @@
   import BannerButton from '../atoms/BannerButton.svelte';
   import Modal from '../molecules/Modal.svelte';
   import WarpTable from '../molecules/WarpTable.svelte';
-  import { getWarpsByBanner } from '../../routes/utils';
+  import { getWarpsByBanner, getOverallAvgPity } from '../../routes/utils';
   import { warpsByBanner } from '../../stores';
   import NavbarButton from '../atoms/NavbarButton.svelte';
+  import Stats from '../molecules/Stats.svelte';
 
   const BANNER_NAMES = ['Character', 'Light Cone', 'Stellar', 'Departure'];
+
+  async function signOutAndReload() {
+    await db.signOut();
+    window.location.reload();
+  }
 
   if (!$warpsByBanner) {
     db.warps.getAllWarps().then((warps) => {
@@ -20,48 +26,22 @@
 
 <h1 on:click={() => window.location.reload()} class="logo">Warpstar</h1>
 
-<div class="import">
+<div class="import-button">
   <NavbarButton on:click={() => (showModal = true)}>Import</NavbarButton>
+</div>
+<div class="sign-out-button">
+  <NavbarButton on:click={signOutAndReload}>Sign out</NavbarButton>
 </div>
 
 <p><i>Note: site still under construction</i></p>
 
-<Modal bind:showModal>
-  <p>Run the following in a non-admin PowerShell while the in-game warp history screen is open.</p>
-  <code>iwr -useb https://warpstar.hotsno.me/getwarpurl | iex</code>
-  <ul>
-    <li>Paste URL here:</li>
-    <li>
-      <input
-        type="text"
-        autocomplete="off"
-        on:keydown={async (e) => {
-          if (e.key === 'Enter') {
-            const input = e.currentTarget;
-            const url = input.value;
-            input.value = '';
-
-            const response = await fetch('/warps', {
-              method: 'POST',
-              body: JSON.stringify({ url }),
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            });
-
-            let warps = await response.json();
-            warpsByBanner.set(getWarpsByBanner(warps));
-            db.warps.add(warps);
-          }
-        }}
-      />
-    </li>
-  </ul>
-</Modal>
+<Modal bind:showModal />
 
 <div class="container">
-  <div class="half" />
-  <div class="half">
+  <div class="stats-container">
+    <Stats />
+  </div>
+  <div class="warp-table-container">
     <div class="banner-buttons">
       {#each BANNER_NAMES as bannerName}
         <BannerButton {bannerName} />
@@ -72,15 +52,6 @@
 </div>
 
 <style>
-  li {
-    display: inline-block;
-  }
-
-  ul {
-    list-style-type: none;
-    padding-left: 0;
-  }
-
   h1 {
     margin-top: 0;
     text-transform: lowercase;
@@ -89,12 +60,14 @@
   }
 
   .container {
-    display: flex;
-    height: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .half {
-    flex: 1;
+  @media (min-width: 1200px) {
+    .container {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 
   .banner-buttons {
@@ -103,13 +76,16 @@
     padding-bottom: 10px;
   }
 
-  input {
-    background-color: #333;
-    border: 0;
-    color: #ccc;
+  /* TODO: fix this ugliness */
+  .import-button {
+    cursor: pointer;
+    font-size: 20px;
+    position: absolute;
+    top: 20px;
+    right: 120px;
+    user-select: none;
   }
-
-  .import {
+  .sign-out-button {
     cursor: pointer;
     font-size: 20px;
     position: absolute;

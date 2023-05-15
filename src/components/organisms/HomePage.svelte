@@ -3,7 +3,7 @@
   import NavbarButton from '../atoms/NavbarButton.svelte';
 </script>
 
-<div>
+<div class="wrapper">
   <Logo />
   <div class="sign-in">
     <NavbarButton on:click>Sign in</NavbarButton>
@@ -20,15 +20,11 @@
     display: block;
   }
 
-  div {
+  .wrapper {
     height: 100%;
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-
-  /* tr:nth-child(even) {
-    background-color: #333;
-  } */
 </style>
