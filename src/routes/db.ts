@@ -36,7 +36,7 @@ export default {
     return supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: 'http://localhost:5173#signed-in'
+        redirectTo: 'http://warpstar.hotsno.me#signed-in'
       }
     });
   },
@@ -45,9 +45,7 @@ export default {
   },
   warps: {
     async add(warps: DBWarp[]): Promise<DBWarp[]> {
-      console.log(warps);
       const { data } = await supabase.from('warps').insert(warps).select();
-      console.log(data);
       return data as Warp[];
     },
     async getAllWarps(): Promise<DBWarp[]> {

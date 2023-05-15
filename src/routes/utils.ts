@@ -32,19 +32,17 @@ export function getWarpsByBanner(dbWarps: DBWarp[]) {
     let fourStarPity = 0;
     let fiveStarPity = 0;
     [...warps].reverse().forEach((warp) => {
-      if (warp.rank_type === 4) {
-        fourStarPity = 0;
-        fiveStarPity++;
-      } else if (warp.rank_type === 5) {
-        fiveStarPity = 0;
-      } else {
-        fourStarPity++;
-        fiveStarPity++;
-      }
+      fourStarPity++;
+      fiveStarPity++;
       pullNumber++;
       warp.pull_number = pullNumber;
       warp.four_star_pity = fourStarPity;
       warp.five_star_pity = fiveStarPity;
+      if (warp.rank_type === 4) {
+        fourStarPity = 0;
+      } else if (warp.rank_type === 5) {
+        fiveStarPity = 0;
+      }
     });
   }
   return warpsByBanner;

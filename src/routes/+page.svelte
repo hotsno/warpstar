@@ -22,10 +22,10 @@
   }
 </script>
 
-<MainPage />
+<!-- <MainPage /> -->
 
-<!-- {#if !clickedSignIn || !$user}
+{#if !clickedSignIn || !$user}
   <HomePage on:click={signInHandler} />
 {:else}
   <MainPage />
-{/if} -->
+{/if}

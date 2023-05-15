@@ -7,14 +7,15 @@
   }
 </script>
 
-<li class="banner" on:click={buttonClicked} on:keypress={buttonClicked}>
+<div class="banner" on:click={buttonClicked} on:keypress={buttonClicked}>
   <button class={$selectedBanner == bannerName ? 'selected' : ''}> {bannerName} </button>
-</li>
+</div>
 
 <style>
   .banner {
     display: inline-block;
-    padding-left: 5px;
+    padding-right: 5px;
+    padding-block: 5px;
   }
 
   button {
@@ -22,16 +23,24 @@
     padding: 10px 20px;
     font-size: 1rem;
     text-align: center;
-    color: #fff;
-    border-radius: 10px;
-    background-color: #333;
+    color: #ddd;
+    border-radius: 5px;
+    background-color: #222;
+    transition: all 0.3s ease;
+    cursor: pointer;
   }
 
+  button:hover,
   button.selected {
-    background-color: #3b9fd1;
+    background-color: #ccc;
+    color: #111;
   }
 
-  button:hover {
-    filter: brightness(0.9);
+  button:active {
+    transform: scale(0.95);
   }
+
+  /* button:hover {
+    filter: brightness(0.9);
+  } */
 </style>
