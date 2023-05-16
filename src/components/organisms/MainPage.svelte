@@ -8,6 +8,7 @@
   import NavbarButton from '../atoms/NavbarButton.svelte';
   import Stats from '../molecules/Stats.svelte';
   import FilterButton from '../atoms/FilterButton.svelte';
+  import PityFilterButton from '../atoms/PityFilterButton.svelte';
 
   const BANNER_NAMES = ['Character', 'Light Cone', 'Stellar', 'Departure'];
   const RARITIES = [3, 4, 5];
@@ -34,11 +35,8 @@
     <a href="https://discord.gg/dsHUpK2hK6" target="_blank" rel="noreferrer">
       <img src="/discord.svg" />
     </a>
-    <!-- <img src="your-logo.png" alt="Logo" /> -->
     <NavbarButton on:click={() => (showModal = true)}>Import</NavbarButton>
     <NavbarButton on:click={signOutAndReload}>Sign out</NavbarButton>
-    <!-- <div>
-    </div> -->
   </div>
 </nav>
 
@@ -58,6 +56,8 @@
       {#each RARITIES as rarity}
         <FilterButton {rarity} />
       {/each}
+      <PityFilterButton rarity={4} />
+      <PityFilterButton rarity={5} />
     </div>
     <WarpTable />
   </div>
@@ -94,6 +94,7 @@
   .filter-buttons {
     display: flex;
     justify-content: center;
+    align-items: center;
     padding-bottom: 10px;
   }
 

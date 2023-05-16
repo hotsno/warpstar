@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Warp } from '$lib/server/fetchWarps';
-  import { warpsByBanner, selectedBanner, rarityBlacklist } from '../../stores';
+  import { warpsByBanner, selectedBanner, rarityBlacklist, selectedPityRarity } from '../../stores';
   import tippy from 'sveltejs-tippy';
 
   let currentBannerWarps: Warp[] = [];
@@ -54,7 +54,7 @@
                 }}
                 class="pity-text"
               >
-                {warp.four_star_pity}
+                {$selectedPityRarity == 4 ? warp.four_star_pity : warp.five_star_pity}
               </span>
             </td>
             <td>
