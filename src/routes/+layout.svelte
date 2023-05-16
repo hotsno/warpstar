@@ -1,5 +1,6 @@
 <script lang="ts">
   import '../styles/fonts.css';
+  import '../styles/global.css';
 </script>
 
 <svelte:head>

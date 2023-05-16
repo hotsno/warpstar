@@ -1,0 +1,70 @@
+:root {
+  --main-font: 'JetBrains Mono', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+* {
+  font-family: var(--main-font);
+}
+
+html {
+  height: 100%;
+  margin: 0;
+  overflow-y: scroll; /* Show vertical scrollbar */
+}
+
+body {
+  background: #111;
+  color: #ddd;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 0px;
+}
+
+h1 {
+  font-family: 'Baloo Chettan 2';
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: #111;
+}
+::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 5px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #25252555;
+}
+
+.tippy-box[data-theme~='site-theme'] {
+  font-family: 'JetBrains Mono';
+  font-size: 12px;
+  background-color: #252525;
+  color: #bbb;
+}
+
+.tippy-box[data-theme~='site-theme'][data-placement^='top'] > .tippy-arrow::before {
+  border-top-color: #252525;
+}

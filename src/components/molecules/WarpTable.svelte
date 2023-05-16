@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Warp } from '$lib/server/fetchWarps';
-  import { warpsByBanner, selectedBanner, rarityBlacklist, selectedPityRarity } from '../../stores';
+  import { warpsByBanner, selectedBanner, rarityBlacklist } from '../../stores';
   import tippy from 'sveltejs-tippy';
 
   let currentBannerWarps: Warp[] = [];
@@ -42,19 +42,27 @@
             <td>
               <span
                 class="circle"
-                class:circle-five-star={warp.rank_type == 5}
-                class:circle-four-star={warp.rank_type == 4}
+                class:circle-five-star={warp.rank_type === 5}
+                class:circle-four-star={warp.rank_type === 4}
+                class:circle-three-star={warp.rank_type === 3}
               />
               <span
                 use:tippy={{
                   duration: 200,
-                  theme: 'epic-theme',
-                  content: `Five star: ${warp.five_star_pity}</br>Four star: ${warp.four_star_pity}`,
+                  theme: 'site-theme',
+                  content: `Five star: ${warp.five_star_pity}</br>Four star: ${warp.four_star_pity}</br>Pull: ${warp.pull_number}`,
                   allowHTML: true
                 }}
                 class="pity-text"
               >
-                {$selectedPityRarity == 4 ? warp.four_star_pity : warp.five_star_pity}
+                {#if warp.rank_type === 5}
+                  {warp.five_star_pity}
+                {:else if warp.rank_type === 4}
+                  {warp.four_star_pity}
+                {:else}
+                  1
+                {/if}
+                <!-- {$selectedPityRarity == 4 ? warp.four_star_pity : warp.five_star_pity} -->
               </span>
             </td>
             <td>
@@ -66,7 +74,7 @@
               <span
                 use:tippy={{
                   content: warp.acquisition_time,
-                  theme: 'epic-theme'
+                  theme: 'site-theme'
                 }}
                 class="date-text"
               >
@@ -127,6 +135,12 @@
     opacity: 0;
   }
 
+  .circle-three-star {
+    background-color: #40bdd6;
+    box-shadow: 0 0 5px #40bdd6d9;
+    opacity: 100%;
+  }
+
   .circle-four-star {
     background-color: #cf9fff;
     box-shadow: 0 0 5px #cf9fffd9;
@@ -174,16 +188,5 @@
   .item-name-text:hover {
     color: #fff;
     transition: all 0.2s ease;
-  }
-
-  :global(.tippy-box[data-theme~='epic-theme']) {
-    font-family: 'JetBrains Mono';
-    font-size: 12px;
-    background-color: #252525;
-    color: #bbb;
-  }
-
-  :global(.tippy-box[data-theme~='epic-theme'][data-placement^='top'] > .tippy-arrow::before) {
-    border-top-color: #252525;
   }
 </style>

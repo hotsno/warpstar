@@ -8,7 +8,6 @@
   import NavbarButton from '../atoms/NavbarButton.svelte';
   import Stats from '../molecules/Stats.svelte';
   import FilterButton from '../atoms/FilterButton.svelte';
-  import PityFilterButton from '../atoms/PityFilterButton.svelte';
 
   const BANNER_NAMES = ['Character', 'Light Cone', 'Stellar', 'Departure'];
   const RARITIES = [3, 4, 5];
@@ -56,8 +55,6 @@
       {#each RARITIES as rarity}
         <FilterButton {rarity} />
       {/each}
-      <PityFilterButton rarity={4} />
-      <PityFilterButton rarity={5} />
     </div>
     <WarpTable />
   </div>
