@@ -11,13 +11,14 @@
     text-align: center;
     color: #aaa;
     border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.03);
+    background-color: rgba(255, 255, 255, 0);
     transition: all 0.3s ease;
     cursor: pointer;
+    font-family: 'Baloo Chettan 2';
   }
 
   button:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.1);
   }
 
   button:active {

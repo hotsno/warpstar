@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { selectedBanner } from '../../stores';
   import type { Warp } from '$lib/server/fetchWarps';
-  import { warpsByBanner } from '../../stores';
+  import { warpsByBanner, selectedBanner, rarityBlacklist } from '../../stores';
   import tippy from 'sveltejs-tippy';
 
   let currentBannerWarps: Warp[] = [];
@@ -10,7 +9,11 @@
   let selectedBannerAlt = '';
   $: selectedBannerAlt = $selectedBanner.toLowerCase().replace(/ /g, '_');
   $: if ($warpsByBanner[selectedBannerAlt]) {
-    currentBannerWarps = $warpsByBanner[selectedBannerAlt];
+    let temp = $warpsByBanner[selectedBannerAlt];
+    for (const rarity of $rarityBlacklist) {
+      temp = temp.filter((warp) => warp.rank_type !== rarity);
+    }
+    currentBannerWarps = temp;
   } else {
     currentBannerWarps = [];
   }
@@ -45,7 +48,6 @@
               <span
                 use:tippy={{
                   duration: 200,
-                  // delay: [50, 50],
                   theme: 'epic-theme',
                   content: `Five star: ${warp.five_star_pity}</br>Four star: ${warp.four_star_pity}`,
                   allowHTML: true
@@ -61,7 +63,13 @@
               </span>
             </td>
             <td>
-              <span use:tippy={{ content: warp.acquisition_time }} class="date-text">
+              <span
+                use:tippy={{
+                  content: warp.acquisition_time,
+                  theme: 'epic-theme'
+                }}
+                class="date-text"
+              >
                 {new Date(warp.acquisition_time).toLocaleDateString('en-US', {
                   month: 'short',
                   day: 'numeric',
@@ -92,10 +100,6 @@
     table {
       width: min(600px, 40vw);
     }
-  }
-
-  th {
-    padding-top: 12px !important; /* TODO: investigate why important is needed here */
   }
 
   td,

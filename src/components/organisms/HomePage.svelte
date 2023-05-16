@@ -12,14 +12,17 @@
   // });
 </script>
 
-<div class="wrapper">
-  <div class="sign-in">
+<nav>
+  <span />
+  <div class="nav-buttons">
     <NavbarButton on:click>Sign in</NavbarButton>
   </div>
+</nav>
+<div class="logo-wrapper">
   <Logo />
-  <div class="quote">
-    <p>{randomQuote}</p>
-  </div>
+</div>
+<div class="quote">
+  <p>{randomQuote}</p>
 </div>
 
 <style>
@@ -30,6 +33,13 @@
     right: 20px;
     user-select: none;
     display: block;
+  }
+
+  .logo-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .wrapper {

@@ -24,14 +24,15 @@
   let showModal = false;
 </script>
 
-<h1 on:click={() => window.location.reload()} class="logo">Warpstar</h1>
-
-<div class="import-button">
-  <NavbarButton on:click={() => (showModal = true)}>Import</NavbarButton>
-</div>
-<div class="sign-out-button">
-  <NavbarButton on:click={signOutAndReload}>Sign out</NavbarButton>
-</div>
+<nav>
+  <div class="logo">
+    <h1 on:click={() => window.location.reload()} class="logo">Warpstar</h1>
+  </div>
+  <div class="nav-buttons">
+    <NavbarButton on:click={() => (showModal = true)}>Import</NavbarButton>
+    <NavbarButton on:click={signOutAndReload}>Sign out</NavbarButton>
+  </div>
+</nav>
 
 <Modal bind:showModal />
 
@@ -77,25 +78,8 @@
     padding-bottom: 10px;
   }
 
-  /* TODO: fix this ugliness */
-  .import-button {
-    cursor: pointer;
-    font-size: 20px;
-    position: absolute;
-    top: 20px;
-    right: 120px;
-    user-select: none;
-  }
-  .sign-out-button {
-    cursor: pointer;
-    font-size: 20px;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    user-select: none;
-  }
-
   .logo {
     cursor: pointer;
+    margin: 0;
   }
 </style>

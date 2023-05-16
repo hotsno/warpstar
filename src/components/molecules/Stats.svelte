@@ -1,5 +1,11 @@
 <script lang="ts">
-  import { getOverallAvgPity, getBannerAvgPity, getCurPity } from '../../routes/utils';
+  import {
+    getOverallAvgPity,
+    getBannerAvgPity,
+    getCurPity,
+    getBannerRarityCount,
+    getTotalRarityCount
+  } from '../../routes/utils';
   import { selectedBanner, warpsByBanner } from '../../stores';
 </script>
 
@@ -16,11 +22,19 @@
           <li>
             <span>Avg 4 star pity</span> <span>{getOverallAvgPity(4, $warpsByBanner)}</span>
           </li>
+          <li>
+            <span>5 star count</span>
+            <span>{getTotalRarityCount(5, $warpsByBanner)}</span>
+          </li>
+          <li>
+            <span>4 star count</span>
+            <span>{getTotalRarityCount(4, $warpsByBanner)}</span>
+          </li>
         </ul>
       </div>
     </div>
     <div class="banner-stats">
-      <h2>Banner stats</h2>
+      <h2><b>{$selectedBanner}</b> banner stats</h2>
       <div class="stats-list-wrapper">
         <ul>
           <li>
@@ -38,6 +52,14 @@
           <li>
             <span>Avg 4 star pity</span>
             <span>{getBannerAvgPity(4, $warpsByBanner, $selectedBanner)}</span>
+          </li>
+          <li>
+            <span>5 star count</span>
+            <span>{getBannerRarityCount(5, $warpsByBanner, $selectedBanner)}</span>
+          </li>
+          <li>
+            <span>4 star count</span>
+            <span>{getBannerRarityCount(4, $warpsByBanner, $selectedBanner)}</span>
           </li>
         </ul>
       </div>
@@ -62,6 +84,7 @@
     border-radius: 20px;
     font-family: 'JetBrains Mono';
     box-shadow: 0px 0px 10px 10px #0d0d0d88;
+    cursor: default;
   }
 
   ul {
