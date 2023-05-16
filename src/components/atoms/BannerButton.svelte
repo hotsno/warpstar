@@ -8,7 +8,7 @@
 </script>
 
 <div class="banner" on:click={buttonClicked} on:keypress={buttonClicked}>
-  <button class={$selectedBanner == bannerName ? 'selected' : ''}> {bannerName} </button>
+  <button class={$selectedBanner === bannerName ? 'selected' : ''}> {bannerName} </button>
 </div>
 
 <style>

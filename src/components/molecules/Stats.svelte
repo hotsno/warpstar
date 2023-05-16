@@ -72,6 +72,10 @@
     font-family: 'JetBrains Mono';
   }
 
+  span:hover {
+    color: #fff;
+  }
+
   .stats {
     display: flex;
     justify-content: center;
