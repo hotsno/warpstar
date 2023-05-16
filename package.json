@@ -12,7 +12,8 @@
     "format": "prettier --plugin-search-dir . --write ."
   },
   "dependencies": {
-    "@supabase/supabase-js": "2.2.3"
+    "@supabase/supabase-js": "2.2.3",
+    "sveltejs-tippy": "^3.0.0"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^2.0.0",

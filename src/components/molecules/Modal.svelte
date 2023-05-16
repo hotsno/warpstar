@@ -54,7 +54,7 @@
 
 <style>
   dialog {
-    max-width: 32em;
+    max-width: 36em;
     border-radius: 0.2em;
     border: none;
     padding: 0;
@@ -104,5 +104,12 @@
   ul {
     list-style-type: none;
     padding-left: 0;
+  }
+
+  code {
+    background-color: #222;
+    padding-block: 2px;
+    padding-inline: 8px;
+    border-radius: 10px;
   }
 </style>
