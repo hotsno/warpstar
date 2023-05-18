@@ -9,7 +9,7 @@ const BANNERS: [number, string][] = [
 export type Warp = {
   item_name: string;
   item_id: number;
-  pull_id: number;
+  pull_id_string: string;
   banner_name: string;
   acquisition_time: string;
   rank_type: number;
@@ -21,7 +21,7 @@ export type Warp = {
 export type DBWarp = {
   item_name: string;
   item_id: number;
-  pull_id: number;
+  pull_id_string: string;
   banner_name: string;
   acquisition_time: string;
   rank_type: number;
@@ -29,10 +29,10 @@ export type DBWarp = {
 
 type APIWarp = {
   name: string;
-  item_id: number;
-  id: number;
+  item_id: string;
+  id: string;
   time: string;
-  rank_type: number;
+  rank_type: string;
 };
 
 export async function getAllWarps(url: string) {
@@ -55,10 +55,10 @@ export async function getAllWarps(url: string) {
           json.data.list.forEach((warp: APIWarp) => {
             curWarps.push({
               item_name: warp.name,
-              item_id: warp.item_id,
-              pull_id: warp.id,
+              item_id: parseInt(warp.item_id),
+              pull_id_string: warp.id,
               acquisition_time: warp.time,
-              rank_type: warp.rank_type,
+              rank_type: parseInt(warp.rank_type),
               banner_name: bannerName
             });
           });
@@ -73,7 +73,7 @@ export async function getAllWarps(url: string) {
         }
         noMoreWarps = true;
       } else {
-        endPullId = curWarps[curWarps.length - 1].pull_id;
+        endPullId = curWarps[curWarps.length - 1].pull_id_string;
         warps.push(...curWarps);
         await sleep(SLEEP_TIME);
       }

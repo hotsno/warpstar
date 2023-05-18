@@ -15,7 +15,7 @@ function dbWarpsToWarps(dbWarps: DBWarp[]) {
 
 export function getWarpsByBanner(dbWarps: DBWarp[]) {
   const warps = dbWarpsToWarps(dbWarps);
-  warps.sort((a, b) => b.pull_id - a.pull_id); // most recent to oldest
+  warps.sort((a, b) => b.pull_id_string.localeCompare(a.pull_id_string)); // newest to oldest
 
   const warpsByBanner: { [key: string]: Warp[] } = {};
   for (const warp of warps) {

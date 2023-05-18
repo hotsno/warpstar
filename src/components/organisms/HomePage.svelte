@@ -1,15 +1,9 @@
 <script>
   import Logo from '../atoms/Logo.svelte';
   import NavbarButton from '../atoms/NavbarButton.svelte';
-  import { onMount } from 'svelte';
 
   const QUOTES = ['March 7th cute and funny', "I don't even play this game", 'Ran out of quotes'];
   const randomQuote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
-
-  // let randomQuote = '';
-  // onMount(() => {
-  //   console.log('mounted');
-  // });
 </script>
 
 <nav>
