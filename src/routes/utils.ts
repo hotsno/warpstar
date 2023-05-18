@@ -45,6 +45,7 @@ export function getWarpsByBanner(dbWarps: DBWarp[]) {
       }
     });
   }
+  console.log(warpsByBanner);
   return warpsByBanner;
 }
 
