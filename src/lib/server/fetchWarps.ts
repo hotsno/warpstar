@@ -79,6 +79,7 @@ export async function getAllWarps(url: string) {
       }
     }
   }
+  console.log(warps);
   return warps;
 }
 
