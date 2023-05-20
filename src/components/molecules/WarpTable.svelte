@@ -37,7 +37,7 @@
             <td><b>N/A</b></td>
           </tr>
         {/if}
-        {#each currentBannerWarps as warp}
+        {#each currentBannerWarps as warp (warp.pull_id_string)}
           <tr>
             <td>
               <span
@@ -62,7 +62,6 @@
                 {:else}
                   1
                 {/if}
-                <!-- {$selectedPityRarity == 4 ? warp.four_star_pity : warp.five_star_pity} -->
               </span>
             </td>
             <td>
