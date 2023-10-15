@@ -20,7 +20,7 @@
       Run the following in a non-admin PowerShell while the in-game warp history screen is open.
       It'll copy a URL to your clipboard.
     </p>
-    <code>iwr -useb https://warpstar.hotsno.me/getwarpurl | iex</code>
+    <code>iwr -useb https://warpstar.vercel.app/getwarpurl | iex</code>
     <ul>
       <li>Paste URL here:</li>
       <li>
