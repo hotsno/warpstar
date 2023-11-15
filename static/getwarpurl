@@ -49,6 +49,7 @@ if ($args.Length -eq 0) {
 
     if ([string]::IsNullOrEmpty($log_lines)) {
         Write-Output "Failed to locate game path! (1)"
+        return
     }
 
     $log_lines = $log_lines.split([Environment]::NewLine)
@@ -72,7 +73,13 @@ if ([string]::IsNullOrEmpty($game_path)) {
 
 $copy_path = [IO.Path]::GetTempPath() + [Guid]::NewGuid().ToString()
 
-Copy-Item -Path "$game_path/webCaches/Cache/Cache_Data/data_2" -Destination $copy_path
+$cache_path = "$game_path/webCaches/2.18.0.0/Cache/Cache_Data/data_2"
+
+if (-not [IO.File]::Exists($cache_path)) {
+    $cache_path = "$game_path/webCaches/Cache/Cache_Data/data_2"
+}
+
+Copy-Item -Path $cache_path -Destination $copy_path
 $cache_data = Get-Content -Encoding UTF8 -Raw $copy_path
 Remove-Item -Path $copy_path
 
